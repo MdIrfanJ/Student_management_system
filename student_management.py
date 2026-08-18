@@ -13,16 +13,13 @@ class Student:
             ave=self.totalmarks()/len(self.marks) #returns the average mark secured by the Student
             return ave
     def numberofpassedsub(self):
-        self.passcount=0
+        passcount=0
         for i in self.marks:
             if(i>=40):
-                self.passcount+=1 #returns the number of passed subjects by the Student
-        return self.passcount
+                passcount+=1 #returns the number of passed subjects by the Student
+        return passcount
     def result(self):
-        if(self.numberofpassedsub()==len(self.marks)):
-            return 1
-        else:
-            return 0
+        return self.numberofpassedsub()==len(self.marks)
     def grade(self):
         ave=self.averagemarks()
         if(ave>=90):
@@ -47,54 +44,50 @@ class Student:
         print("TOTAL MARKS:",self.totalmarks())
         print("AVERAGE    :",self.averagemarks())
         print("GRADE      :",self.grade())
-        if(self.result()==1):
-            print(f"Congratulations! You passed the exam... clearing all {self.passcount} subjects")
+        passed=self.numberofpassedsub()
+        if passed==len(self.marks):
+            print(f"Congratulations! You passed the exam... clearing all {passed} subjects")
         else:
-            print(f"Sorry... Your marks does not satisfy the passing criteria...in {len(self.marks)-self.passcount} subjects")
+            print(f"Sorry... Your marks does not satisfy the passing criteria...in {len(self.marks)-passed} subjects")
         print()
 students=[]
-while True:
-    print("=================================================================")
-    print("WELCOME TO STUDENT MANAGEMENT SYSTEM")
-    print("=================================================================")
-    print("WHAT ARE YOU LOOKING FOR?")
-    print("\n1.ADD STUDENT")
-    print("2.DISPLAY STUDENTS")
-    print("3.SEARCH STUDENT")
-    print("4.UPDATE STUDENT")
-    print("5.DELETE STUDENT")
-    print("6.EXIT")
-    choice=int(input("\nEnter your choice :"))
-    if(choice==1):
-        n=int(input("Enter the number of students you want to add:"))
-        for i in range(n):
-            print("enter name:")
-            name=input()
-            print("enter reg number:")
-            regno=input()
-            print("enter department:")
-            dept=input()
-            print("enter marks:")
+def addstudents():
+    n=int(input("Enter the number of students you want to add:"))
+    for i in range(n):
+        print("enter name:")
+        name=input()
+        print("enter reg number:")
+        regno=input()
+        print("enter department:")
+        dept=input()
+        print("enter marks:")
+    while True:
+        try:
             mark=list(map(int,input().split()))
-            student=Student(name,regno,dept,mark)
-            valid=0
-            inv_regno=0
-            for i in students:
-                if i.register_no==regno:
-                    inv_regno=1
-                    print("A student already exists with this register number...")
+            valid=1
+            for m in mark:
+                if(m<0 or m>100):
+                    valid=0
                     break
-            for j in mark:
-                if j<0 or j>100:
-                    print("enter only valid marks")
-                    valid=1
-                    break
-            if(valid==0 and inv_regno==0):
-                    students.append(student)
-    elif(choice==2):
+            if valid:
+                break
+            else:
+                print("Enter marks between 0 to 100...")
+        except ValueError:
+            print("Enter valid marks only...")
+    student=Student(name,regno,dept,mark)
+    inv_regno=0
+    for i in students:
+        if i.register_no==regno:
+            inv_regno=1
+            print("A student already exists with this register number...")
+            break
+    if inv_regno==0:
+        students.append(student)
+def displaystudents():
         for i in students:
             i.display()
-    elif(choice==3):
+def searchstudent():
         regno=input("enter the student register number you want to search:")
         found=0
         for i in students:
@@ -105,7 +98,7 @@ while True:
                 break
         if(found==0):
             print("\nStudent not found!")
-    elif(choice==4):
+def updatestudent():
         regno=input("enter the student register number of the student you want to modify...")
         found=0
         for i in students:
@@ -121,17 +114,21 @@ while True:
                     name=input("Enter the new name:")
                     i.name=name
                 elif(update==2):
-                    marks=list(map(int,input().split()))
-                    valid=0
-                    for j in marks:
-                        if j<0 or j>100:
-                            print("enter only valid marks")
-                            valid=1
-                            break
-                    if(valid==0):
-                        i.marks=marks
-                    else:
-                        print("You entered invalid marks...hence marks will remain same")
+                    while True:
+                        try:
+                            marks=list(map(int,input().split()))
+                            valid=0
+                            for j in marks:
+                                if j<0 or j>100:
+                                    print("enter only valid marks")
+                                    valid=1
+                                    break
+                            if(valid==0):
+                                i.marks=marks
+                            else:
+                                print("You entered invalid marks...hence marks will remain same")
+                        except ValueError:
+                            print("Enter only valid marks...")
                 elif(update==3):
                     name=input("Enter the new name:")
                     i.name=name
@@ -151,7 +148,7 @@ while True:
                 break
         if(found==0):
             print("\nStudent not found!")
-    elif(choice==5):
+def deletestudent():
         regno=input("enter the student register number of the student you want to delete:")
         found=0
         for i in students:
@@ -164,7 +161,35 @@ while True:
                 break
         if(found==0):
             print("\nStudent not found!")
-    elif(choice==6):
-        break
-    else:
+def invalid():
         print("Invalid choice")
+while True:
+    print("=================================================================")
+    print("WELCOME TO STUDENT MANAGEMENT SYSTEM")
+    print("=================================================================")
+    print("WHAT ARE YOU LOOKING FOR?")
+    print("\n1.ADD STUDENT")
+    print("2.DISPLAY STUDENTS")
+    print("3.SEARCH STUDENT")
+    print("4.UPDATE STUDENT")
+    print("5.DELETE STUDENT")
+    print("6.EXIT")
+    try:
+        choice=int(input("\nEnter your choice :"))
+        if(choice==1):
+            addstudents()
+        elif(choice==2):
+            displaystudents()
+        elif(choice==3):
+            searchstudent()
+        elif(choice==4):
+            updatestudent()
+        elif(choice==5):
+            deletestudent()
+        elif(choice==6):
+            print("THANKYOU FOR USING STUDENT MANAGEMENT SYSTEM...")
+            break
+        else:
+            invalid()
+    except ValueError:
+        print("Enter only valid numbers...")
