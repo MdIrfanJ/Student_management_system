@@ -6,19 +6,19 @@ This is a **menu-driven console application** that allows users to **add, displa
 
 ## **Features**
 
-- **Add** multiple student records
-- **Display** all student records
-- **Search** for a student using register number
-- **Update** student name and marks
-- **Delete** student records
-- **Calculate total marks**
-- **Calculate average marks**
-- **Count passed subjects**
-- **Determine overall student result**
-- **Assign grades based on average marks**
-- **Validate marks between 0 and 100**
-- **Prevent duplicate register numbers**
-- **Handle invalid numeric input using exception handling**
+- **Add Student Records**
+- **Display Student Records**
+- **Search Student by Register Number**
+- **Update Student Name and Marks**
+- **Delete Student Records**
+- **Calculate Total Marks**
+- **Calculate Average Marks**
+- **Count Passed Subjects**
+- **Determine Overall Result**
+- **Assign Grades Based on Average Marks**
+- **Validate Marks Between 0 and 100**
+- **Prevent Duplicate Register Numbers**
+- **Handle Invalid Input Using Exception Handling**
 
 ## **Grading System**
 
@@ -71,6 +71,8 @@ The program automatically calculates:
 
 ## **Application Menu**
 
+The application provides the following options:
+
 1. **Add Student**
 2. **Display Students**
 3. **Search Student**
@@ -87,18 +89,19 @@ Make sure **Python 3** is installed on your computer.
 ### **Steps**
 
 1. **Clone or download** this repository.
-2. Open the project folder in a terminal.
-3. Run the Python file:
+2. Open the project folder in **VS Code**.
+3. Open the terminal in the project folder.
+4. Run the Python file using:
 
-**python student_management.py**
+    python student_management.py
 
-4. Follow the instructions displayed in the terminal.
+5. Follow the instructions displayed in the terminal.
 
 ## **Data Storage**
 
 Currently, student records are stored in a **Python list while the program is running**.
 
-**Note:** Student data will be **lost when the program is closed**, as permanent storage has not yet been implemented.
+**Note:** Student data will be **lost when the program is closed**, because permanent data storage has not yet been implemented.
 
 ## **Future Improvements**
 
@@ -118,3 +121,7 @@ Currently, student records are stored in a **Python list while the program is ru
 This project was developed as part of my **learning journey in Python and Object-Oriented Programming**.
 
 Through this project, I strengthened my understanding of **classes, objects, methods, lists, functions, input validation, exception handling, and CRUD operations**.
+
+---
+
+**⭐ If you find this project useful, consider giving the repository a star!**
