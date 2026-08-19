@@ -45,7 +45,7 @@ class Student:
         print("AVERAGE    :",self.averagemarks())
         print("GRADE      :",self.grade())
         passed=self.numberofpassedsub()
-        if passed==len(self.marks):
+        if self.result():
             print(f"Congratulations! You passed the exam... clearing all {passed} subjects")
         else:
             print(f"Sorry... Your marks does not satisfy the passing criteria...in {len(self.marks)-passed} subjects")
@@ -61,29 +61,32 @@ def addstudents():
         print("enter department:")
         dept=input()
         print("enter marks:")
-    while True:
-        try:
-            mark=list(map(int,input().split()))
-            valid=1
-            for m in mark:
-                if(m<0 or m>100):
-                    valid=0
+        while True:
+            try:
+                mark=list(map(int,input().split()))
+                if len(mark)==0:
+                    print("Please enter at least one mark.")
+                    continue
+                valid=1
+                for m in mark:
+                    if(m<0 or m>100):
+                        valid=0
+                        break
+                if valid:
                     break
-            if valid:
+                else:
+                    print("Enter marks between 0 to 100...")
+            except ValueError:
+                print("Enter valid marks only...")
+        student=Student(name,regno,dept,mark)
+        inv_regno=0
+        for i in students:
+            if i.register_no==regno:
+                inv_regno=1
+                print("A student already exists with this register number...")
                 break
-            else:
-                print("Enter marks between 0 to 100...")
-        except ValueError:
-            print("Enter valid marks only...")
-    student=Student(name,regno,dept,mark)
-    inv_regno=0
-    for i in students:
-        if i.register_no==regno:
-            inv_regno=1
-            print("A student already exists with this register number...")
-            break
-    if inv_regno==0:
-        students.append(student)
+        if inv_regno==0:
+            students.append(student)
 def displaystudents():
         for i in students:
             i.display()
@@ -116,7 +119,10 @@ def updatestudent():
                 elif(update==2):
                     while True:
                         try:
-                            marks=list(map(int,input().split()))
+                            marks=list(map(int,input("Enter the new marks:").split()))
+                            if len(marks)==0:
+                                print("Please enter at least one mark.")
+                                continue
                             valid=0
                             for j in marks:
                                 if j<0 or j>100:
@@ -125,6 +131,7 @@ def updatestudent():
                                     break
                             if(valid==0):
                                 i.marks=marks
+                                break
                             else:
                                 print("You entered invalid marks...hence marks will remain same")
                         except ValueError:
@@ -132,17 +139,25 @@ def updatestudent():
                 elif(update==3):
                     name=input("Enter the new name:")
                     i.name=name
-                    marks=list(map(int,input().split()))
-                    valid=0
-                    for j in marks:
-                        if j<0 or j>100:
-                            print("enter only valid marks")
-                            valid=1
-                            break
-                    if(valid==0):
-                        i.marks=marks
-                    else:
-                        print("You entered invalid marks...hence only the name gets changed,marks will remain same")
+                    while True:
+                        try:
+                            marks=list(map(int,input("Enter the new marks:").split()))
+                            if len(marks)==0:
+                                print("Please enter at least one mark.")
+                                continue
+                            valid=0
+                            for j in marks:
+                                if j<0 or j>100:
+                                    print("enter only valid marks")
+                                    valid=1
+                                    break
+                            if(valid==0):
+                                i.marks=marks
+                                break
+                            else:
+                                print("You entered invalid marks...hence only the name gets changed,marks will remain same")
+                        except ValueError:
+                            print("Enter only valid marks...")
                 else:
                     print("Invalid choice")
                 break
